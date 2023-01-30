@@ -1,0 +1,8 @@
+db_1 
+web_1
+
+[db_hosts]
+db_1
+
+[web_hosts]
+web_1
