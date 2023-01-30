@@ -1,8 +1,10 @@
-db_1 
-web_1
+db_1 ansible_host=172.31.8.208 
+web_1 ansible_host=172.31.2.63
+web_2 ansible_host=172.31.7.201
 
 [db_hosts]
 db_1
 
 [web_hosts]
 web_1
+web_2
