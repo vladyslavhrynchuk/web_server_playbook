@@ -1,0 +1,24 @@
+# tasks file for web_server
+    - name: Install_dependencies
+      become: true
+      apt:
+        state: present
+        name:
+          - 'python3'
+          - 'python3-setuptools'
+          - 'python3-dev'
+          - 'build-essential'
+          - 'python3-pip'
+          - 'python3-mysqldb'
+          - 'mysql-client'
+    - name: Install_flask
+      pip:
+        name:
+          - flask
+          - flask-mysql
+    - name: Clone_Git_repo
+      git:
+        repo: https://github.com/mmumshad/simple-webapp.git
+        clone: "yes"
+        update: "yes"
+        dest: /home/ubuntu/simple-webapp

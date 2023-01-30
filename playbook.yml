@@ -1,0 +1,24 @@
+- name: Update_and_upgrade_apt_packages
+  hosts: all
+  become: true
+  tasks:
+    - apt:
+        upgrade: "yes"
+        update_cache: "yes"
+
+- name: Install_and_configure_mysql
+  become: true
+  hosts: db_hosts
+  roles:
+    - mysql
+
+- name: Install_and_configure_web_server
+  become: true
+  hosts: web_hosts
+  roles:
+    - web_server
+- name: Start_web_server
+  become: true
+  hosts: web_hosts
+  tasks:
+    - shell: "export MYSQL_DATABASE_HOST=172.31.8.208; FLASK_APP=/home/ubuntu/simple-webapp/app.py nohup flask run --host=0.0.0.0 &"

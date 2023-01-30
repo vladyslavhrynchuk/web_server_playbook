@@ -1,0 +1,31 @@
+# tasks file for mysql
+    - name: Install_mysql
+      apt:
+         state: present
+         name: 
+           - 'mysql-client'
+           - 'mysql-server'
+    - name: Start_and_enable_mysql_service
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+    - name: Create_mysql_user
+      mysql_user:
+        name: "{{db_user}}"
+        password: "{{db_pass}}"
+        priv: '*.*:ALL'
+        host: '%'
+        state: present
+    - name: Create_employee_db
+      mysql_db:
+        name: "{{db_name}}"
+        state: present
+    - name: Enable remote login to mysql
+      lineinfile:
+         path: /etc/mysql/mysql.conf.d/mysqld.cnf
+         regexp: '^bind-address'
+         line: 'bind-address = 0.0.0.0'
+         backup: yes
+      notify:
+         - Restart mysql
