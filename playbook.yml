@@ -17,8 +17,11 @@
   hosts: web_hosts
   roles:
     - web_server
+
 - name: Start_web_server
   become: true
   hosts: web_hosts
+  environment:
+    MYSQL_DATABASE_HOST: "{{ hostvars[groups['db_hosts'][0]].ansible_host }}"
   tasks:
-    - shell: "export MYSQL_DATABASE_HOST=172.31.8.208; FLASK_APP=/home/ubuntu/simple-webapp/app.py nohup flask run --host=0.0.0.0 &"
+    - shell: "FLASK_APP=/home/ubuntu/simple-webapp/app.py nohup flask run --host=0.0.0.0 &"
